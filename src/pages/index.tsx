@@ -1,17 +1,11 @@
+import { getAllPosts } from '../../lib/notionApi'
+
 import { Client } from '@notionhq/client'
-import Text from '../components/Text'
+import PostCard from '../components/postCard'
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
-
-const getAllPosts = async () => {
-  if (!process.env.NOTION_DATABASE_ID) return
-  const posts = await notion.databases.query({
-    database_id: process.env.NOTION_DATABASE_ID,
-  })
-  return posts.results
-}
 
 export const getStaticProps = async () => {
   const allPosts = await getAllPosts()
@@ -39,6 +33,11 @@ export default function Home({ allPosts }: any) {
       text: post.properties.テキスト.rich_text[0].plain_text,
     }
   })
-
-  return <Text text={'text'}></Text>
+  return (
+    <>
+      {postsData.map((postData: any) => (
+        <PostCard key={postData.id} postData={postData}></PostCard>
+      ))}
+    </>
+  )
 }
