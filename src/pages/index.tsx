@@ -28,16 +28,16 @@ export default function Home({ allPosts }: any) {
       id: post.id,
       date: post.properties.投稿日.date.start,
       slug: post.properties.スラグ.rich_text[0].plain_text,
-      tag: getTags(post.properties.タグ.multi_select),
+      tags: getTags(post.properties.タグ.multi_select),
       title: post.properties.タイトル.title[0].plain_text,
       text: post.properties.テキスト.rich_text[0].plain_text,
     }
   })
   return (
-    <>
+    <div className='grid gap-5'>
       {postsData.map((postData: any) => (
         <PostCard key={postData.id} postData={postData}></PostCard>
       ))}
-    </>
+    </div>
   )
 }
