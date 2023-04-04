@@ -11,3 +11,16 @@ export const getAllPosts = async () => {
   })
   return posts.results
 }
+
+export const getSinglePost = async () =>{
+  if (!process.env.NOTION_DATABASE_ID) return
+  const post = await notion.databases.query({
+    database_id: process.env.NOTION_DATABASE_ID,
+    filter: {
+      property: "Landmark",
+      rich_text: {
+        contains: "Bridge",
+      },
+    },
+  })
+}
