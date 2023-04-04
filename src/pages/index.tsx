@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { getAllPosts } from '../../lib/notionApi'
 
 import { Client } from '@notionhq/client'
@@ -36,7 +38,9 @@ export default function Home({ allPosts }: any) {
   return (
     <div className='grid gap-5'>
       {postsData.map((postData: any) => (
-        <PostCard key={postData.id} postData={postData}></PostCard>
+        <Link key={postData.id} href={`/posts/${postData.slug}`}>
+          <PostCard postData={postData}></PostCard>
+        </Link>
       ))}
     </div>
   )
