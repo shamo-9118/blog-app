@@ -1,10 +1,30 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { getSinglePost } from '../../../lib/notionApi'
 
-//このページのslugを元にnotionからデータを取得する
-//notinoApi.tsで関数を準備してそれにslugを渡して1ページ分の記事を取得する
+//オブジェクト定義して直書きだけど、useRouter使って動的にパスを生成するようにする
+export const getStaticPaths = async () => {
+  return {
+    paths: [
+      { params: { slug: 'post01' } },
+      { params: { slug: 'post02' } },
+      { params: { slug: 'post03' } },
+    ],
+    fallback: 'blocking',
+  }
+}
 
-const PostPage = () => {
+export const getStaticProps = async ({ params }: any) => {
+  const post = await getSinglePost(params.slug)
+  return {
+    props: {
+      post,
+    },
+  }
+}
+
+const PostPage = ({ post }: any) => {
+  console.log(post)
   const router = useRouter()
   console.log(router.query.slug)
 
