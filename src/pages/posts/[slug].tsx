@@ -2,7 +2,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { getSinglePost } from '../../../lib/notionApi'
 
-// オブジェクト定義して直書きだけど、useRouter使って動的にパスを生成するようにする
+// TASK:オブジェクト定義してslugが直書きだけどgetAllPostを使ってスラグを動的に生成するようにする
+// TASK:リロードしたらエラーが出る問題解決したい。仮説もなんもない、、、
+
 export const getStaticPaths = async () => {
   return {
     paths: [
