@@ -17,7 +17,7 @@ export const getSinglePost = async (slug: any) => {
   const post = await notion.databases.query({
     database_id: process.env.NOTION_DATABASE_ID,
     filter: {
-      property: 'Slug',
+      property: 'スラグ',
       formula: {
         string: {
           equals: slug,
@@ -25,4 +25,6 @@ export const getSinglePost = async (slug: any) => {
       },
     },
   })
+  const page = post.results[0]
+  return { post, page }
 }

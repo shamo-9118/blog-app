@@ -10,7 +10,6 @@ type Props = {
 }
 
 const PostCard: FC<any> = (props) => {
-  console.log(props.postData.tag)
   return (
     <section className='max-w-2xl bg-zinc-700 text-white rounded-md flex p-7'>
       <h2 className='text-xl'>{props.postData.title}</h2>
