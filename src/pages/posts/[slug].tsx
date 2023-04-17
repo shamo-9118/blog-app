@@ -1,17 +1,18 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { getSinglePost } from '../../../lib/notionApi'
-
-// TASK:オブジェクト定義してslugが直書きだけどgetAllPostを使ってスラグを動的に生成するようにする
-// TASK:リロードしたらエラーが出る問題解決したい。仮説もなんもない、、、
+import { getSinglePost, getAllPosts } from '../../../lib/notionApi'
 
 export const getStaticPaths = async () => {
+  const allPosts = await getAllPosts()
+  const params = allPosts?.map((post: any) => {
+    return {
+      params: {
+        slug: post.properties.スラグ.rich_text[0].plain_text,
+      },
+    }
+  })
   return {
-    paths: [
-      { params: { slug: 'post01' } },
-      { params: { slug: 'post02' } },
-      { params: { slug: 'post03' } },
-    ],
+    paths: params,
     fallback: 'blocking',
   }
 }
@@ -29,8 +30,7 @@ const PostPage = ({ post }: any) => {
   const router = useRouter()
   const slug = router.query.slug
   const title = post.page.properties['タイトル'].title[0].plain_text
-  const posted_date = post.page.properties["投稿日"].date.start
-   
+  const posted_date = post.page.properties['投稿日'].date.start
 
   return (
     <>
